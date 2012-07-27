@@ -7,10 +7,10 @@
 	<meta name="viewport" content="width=device-width">
 
     <!-- Included CSS Files -->
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
+    {{HTML::style('css/foundation.css')}}
+    {{HTML::style('css/app.css')}}
 
-    <script src="js/modernizr.foundation.js"></script>
+    {{HTML::script('js/modernizr.foundation.js')}}
 </head>
 <body>
 	<header>
@@ -39,9 +39,9 @@
 	</footer>
 
 	<!-- Included JS Files (Compressed) -->
-    <script src="js/foundation.js"></script>
+    {{HTML::script('js/foundation.js')}}
 
     <!-- Initialize JS Plugins -->
-    <script src="js/app.js"></script>
+    {{HTML::script('js/app.js')}}
 </body>
 </html>

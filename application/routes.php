@@ -1,5 +1,7 @@
 <?php
 
+Route::get('campuses/(:any)', 'campuses@individual');
+
 Route::controller(Controller::detect());
 
 /*

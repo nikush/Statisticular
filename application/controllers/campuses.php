@@ -15,7 +15,8 @@ class Campuses_Controller extends Base_Controller {
 	    
 	    if (is_null($campus))
 	    {
-            return View::make('campuses.404')->with('name', $slug);
+	        $view = View::make('campuses.404')->with('name', $slug);
+	        return Response::make($view, 404, array());
 	    } else
 	    {
 	        Section::inject('title', $campus->name);

@@ -1,10 +1,9 @@
 @layout('template')
 
 @section('title')
-Statisticular
+404 - Page not found
 @endsection
 
 @section('content')
-<h1>Welcome!</h1>
-<p>Statisticular is awesome like!</p>
+<h1>404 - Page not found</h1>
 @endsection

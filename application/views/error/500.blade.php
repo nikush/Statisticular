@@ -1,10 +1,9 @@
 @layout('template')
 
 @section('title')
-Statisticular
+Error 500 - Internal server error
 @endsection
 
 @section('content')
-<h1>Welcome!</h1>
-<p>Statisticular is awesome like!</p>
+<h1>Error 500 - Internal server error</h1>
 @endsection

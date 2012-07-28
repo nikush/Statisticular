@@ -10,18 +10,26 @@ class Campuses_Controller extends Base_Controller {
 	
 	public function action_individual($slug)
 	{
-	    $name = Str::title($slug);
-	    $campus = Campus::where('name', '=', $name)->take(1)->first();
-	    
+	    $campus = $this->get_campus($slug);
 	    if (is_null($campus))
 	    {
-	        $view = View::make('campuses.404')->with('name', $slug);
-	        return Response::make($view, 404, array());
+	        return $this->show_404($slug);
 	    } else
 	    {
 	        Section::inject('title', $campus->name);
 	        return View::make('campuses.individual')->with('campus_name', $campus->name);
 	    }
+	}
+	
+	protected function get_campus($slug)
+	{
+	    return Campus::find_by_name($slug);
+	}
+	
+	protected function show_404($slug)
+	{
+	    $view = View::make('campuses.404')->with('name', $slug);
+	    return Response::make($view, 404, array());
 	}
 
 }

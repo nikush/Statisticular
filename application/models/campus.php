@@ -12,6 +12,12 @@ class Campus extends Eloquent
     
     public function intakes()
     {
-        return $this->has_many('Intake', 'campus_fk')->get();
+        return $this->has_many('Intake', 'campus_fk');
+    }
+
+    public static function find_by_name($slug)
+    {
+        $name = Str::title($slug);
+	    return Campus::where('name', '=', $name)->take(1)->first();
     }
 }

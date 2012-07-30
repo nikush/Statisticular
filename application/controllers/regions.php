@@ -17,7 +17,10 @@ class Regions_Controller extends Base_Controller {
 	    $region = Region::where('name', '=', $region_name)->take(1)->first();
 	    if (is_null($region))
 	    {
-	        $view = View::make('regions.404')->with('name', $region_name);
+	        $view = View::make('thing-not-found')
+	            ->with('name', $region_slug)
+	            ->with('thing', 'region')
+	            ->with('url', URL::to('regions'));
 	        Return Response::make($view, 404, array());
 	    }
 	    

@@ -48,7 +48,11 @@ class Intakes_Controller extends Campuses_Controller
         
         if (is_null($intake))
         {
-            $view = View::make('intakes.404')->with('name', $intake_slug);
+            $campus_name = Str::lower($campus->name);
+            $view = View::make('thing-not-found')
+                ->with('name', $intake_slug)
+                ->with('thing', 'intake')
+                ->with('url', URL::to("campuses/{$campus_name}/intakes"));
             return $view;
         }
     

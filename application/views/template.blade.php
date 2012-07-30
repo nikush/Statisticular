@@ -21,6 +21,8 @@
 		    </dev>
 		</div>
 	</header>
+	
+	@yield('breadcrumbs')
 
     <div role="main" class="main">
 	    <div class="row">

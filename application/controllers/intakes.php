@@ -57,7 +57,9 @@ class Intakes_Controller extends Campuses_Controller
         }
     
         Section::inject('title', $intake->name);
-        return View::make('intakes.individual')->with('intake', $intake->name);
+        return View::make('intakes.individual')
+            ->with('intake', $intake->name)
+            ->with('campus', $campus->name);
     }
 
 }

@@ -13,9 +13,19 @@ Regions
 
 @section('content')
 <h1>Regions</h1>
-<ul class="disc">
-@foreach($regions as $region)
-<li><a href="{{URL::to('regions/'.Str::lower($region->name))}}">{{$region->name}}</a></li>
-@endforeach
-</ul>
+<div class="row">
+    <div class="two columns">
+        <ul class="side-nav">
+            <li><a href="{{URL::to('campuses')}}">Campuses</a></li>
+            <li class="active"><a href="{{URL::to('regions')}}">Regions</a></li>
+        </ul>
+    </div>
+    <div class="ten columns">
+        <ul class="disc">
+            @foreach($regions as $region)
+            <li><a href="{{URL::to('regions/'.Str::lower($region->name))}}">{{$region->name}}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
 @endsection

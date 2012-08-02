@@ -13,8 +13,7 @@ class Regions_Controller extends Base_Controller {
 	{
 	    // remove 'action_' from the start
 	    $region_slug = substr($method_name, 7);
-	    $region_name =  $region_slug == 'uk' ? 'UK' : Str::title($region_slug);
-	    $region = Region::where('name', '=', $region_name)->take(1)->first();
+	    $region = Region::where('slug', '=', $region_slug)->take(1)->first();
 	    if (is_null($region))
 	    {
 	        $view = View::make('thing-not-found')

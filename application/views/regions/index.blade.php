@@ -23,7 +23,7 @@ Regions
     <div class="ten columns">
         <ul class="disc">
             @foreach($regions as $region)
-            <li><a href="{{URL::to('regions/'.Str::lower($region->name))}}">{{$region->name}}</a></li>
+            <li><a href="{{URL::to('regions/'.$region->slug)}}">{{$region->name}}</a></li>
             @endforeach
         </ul>
     </div>

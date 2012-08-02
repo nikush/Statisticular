@@ -14,10 +14,4 @@ class Campus extends Eloquent
     {
         return $this->has_many('Intake', 'campus_fk');
     }
-
-    public static function find_by_name($slug)
-    {
-        $name = Str::title($slug);
-	    return Campus::where('name', '=', $name)->take(1)->first();
-    }
 }

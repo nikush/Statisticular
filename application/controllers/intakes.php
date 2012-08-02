@@ -5,7 +5,7 @@ class Intakes_Controller extends Campuses_Controller
 
     public function action_route($campus_slug, $intake_slug)
     {
-        $campus = parent::get_campus($campus_slug);
+        $campus = Campus::where('slug', '=', $campus_slug)->take(1)->first();
         
         if (is_null($campus))  {
             // campus not found
@@ -18,8 +18,7 @@ class Intakes_Controller extends Campuses_Controller
     
     private function get_intake($intake_slug, $campus)
     {
-        $intake_name = Str::upper($intake_slug);
-        $intake = $campus->intakes()->where('name', '=', $intake_name)->take(1)->first();
+        $intake = $campus->intakes()->where('slug', '=', $intake_slug)->take(1)->first();
         
         if (is_null($intake)) {
             $campus_name = Str::lower($campus->name);
@@ -33,7 +32,7 @@ class Intakes_Controller extends Campuses_Controller
         Section::inject('title', $intake->name);
         return View::make('intakes.individual')
             ->with('intake', $intake->name)
-            ->with('campus', $campus->name);
+            ->with('campus', $campus);
     }
 
 }

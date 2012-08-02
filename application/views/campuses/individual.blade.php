@@ -21,7 +21,7 @@
     <div class="ten columns">
         <ul class="disc">
             @foreach($intakes as $intake)
-            <li><a href="{{URL::current().'/'.Str::lower($intake->name)}}">{{$intake->name}}</a></li>
+            <li><a href="{{URL::current().'/'.$intake->slug}}">{{$intake->name}}</a></li>
             @endforeach
         </ul>
     </div>

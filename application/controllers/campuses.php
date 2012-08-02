@@ -11,7 +11,7 @@ class Campuses_Controller extends Base_Controller
 	
 	public function action_individual($slug)
 	{
-	    $campus = $this->get_campus($slug);
+	    $campus = Campus::where('slug', '=', $slug)->take(1)->first();
 	    if (is_null($campus)) {
 	        return $this->show_404($slug);
 	    } else {
@@ -22,11 +22,6 @@ class Campuses_Controller extends Base_Controller
 	            ->with('campus_name', $campus->name)
 	            ->with('intakes', $intakes);
 	    }
-	}
-	
-	protected function get_campus($slug)
-	{
-	    return Campus::find_by_name($slug);
 	}
 	
 	protected function show_404($slug)

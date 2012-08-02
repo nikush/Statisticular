@@ -24,7 +24,7 @@ Campuses
         <h3>Select a campus</h3>
         <ul class="disc">
             @foreach($campuses as $campus)
-            <li><a href="{{URL::to('campuses/'.Str::lower($campus->name))}}">{{$campus->name}}</a></li>
+            <li><a href="{{URL::to('campuses/'.$campus->slug)}}">{{$campus->name}}</a></li>
             @endforeach
         </ul>
     </div>

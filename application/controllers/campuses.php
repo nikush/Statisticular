@@ -1,6 +1,7 @@
 <?php
 
-class Campuses_Controller extends Base_Controller {
+class Campuses_Controller extends Base_Controller
+{
 
 	public function action_index()
 	{
@@ -11,13 +12,15 @@ class Campuses_Controller extends Base_Controller {
 	public function action_individual($slug)
 	{
 	    $campus = $this->get_campus($slug);
-	    if (is_null($campus))
-	    {
+	    if (is_null($campus)) {
 	        return $this->show_404($slug);
-	    } else
-	    {
+	    } else {
+	        $intakes = $campus->intakes()->order_by('start_date', 'asc')->get();
+	        
 	        Section::inject('title', $campus->name);
-	        return View::make('campuses.individual')->with('campus_name', $campus->name);
+	        return View::make('campuses.individual')
+	            ->with('campus_name', $campus->name)
+	            ->with('intakes', $intakes);
 	    }
 	}
 	

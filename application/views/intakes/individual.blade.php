@@ -4,8 +4,7 @@
     @section('crumbs')
     <li><a href="{{URL::to('/')}}">Home</a></li>
     <li><a href="{{URL::to('campuses')}}">Campuses</a></li>
-    <li><a href="{{URL::to('campuses/'.$campus)}}">{{$campus}}</a></li>
-    <li><a href="{{URL::to('campuses/'.$campus.'/intakes')}}">Intakes</a></li>
+    <li><a href="{{URL::to('campuses/'.Str::lower($campus))}}">{{$campus}}</a></li>
     @endsection
     @include('partials.breadcrumbs')
 @endsection

@@ -10,4 +10,9 @@
 
 @section('content')
 <h1>{{$campus_name}}</h1>
+<ul class="disc">
+@foreach($intakes as $intake)
+<li><a href="{{URL::current().'/'.Str::lower($intake->name)}}">{{$intake->name}}</a></li>
+@endforeach
+</ul>
 @endsection

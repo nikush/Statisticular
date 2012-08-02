@@ -1,6 +1,6 @@
 <?php
 
-Route::get('campuses/(:any)/intakes/(:any?)', 'intakes@route');
+Route::get('campuses/(:any)/(:any)', 'intakes@route');
 
 Route::get('campuses/(:any)', 'campuses@individual');
 

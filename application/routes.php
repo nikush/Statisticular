@@ -1,4 +1,8 @@
 <?php
+Route::get('campuses/(:any)/(:any)/assignments/(:any)', 'assignments@assignments_single');
+
+Route::get('campuses/(:any)/(:any)/assignments', 'assignments@assignments_index');
+
 Route::get('campuses/(:any)/(:any)/(:num)', 'students@students_single');
 
 Route::get('campuses/(:any)/(:any)', 'intakes@intakes_single');

@@ -1,9 +1,9 @@
 <?php
-Route::get('campuses/(:any)/(:any)/(:num)', 'students@students_index');
+Route::get('campuses/(:any)/(:any)/(:num)', 'students@students_single');
 
-Route::get('campuses/(:any)/(:any)', 'intakes@route');
+Route::get('campuses/(:any)/(:any)', 'intakes@intakes_single');
 
-Route::get('campuses/(:any)', 'campuses@individual');
+Route::get('campuses/(:any)', 'campuses@single');
 
 Route::controller(Controller::detect());
 

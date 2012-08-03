@@ -1,21 +1,31 @@
 <?php
 
-class Regions_Controller extends Base_Controller {
-
+class Regions_Controller extends Base_Controller
+{
+    /**
+     * List all regions.
+     *
+     * @return string
+     */
 	public function action_index()
 	{
 	    $regions = Region::order_by('name', 'asc')->get();
-	    return View::make('regions.index')->with('regions', $regions);
+	    return View::make('regions.list')->with('regions', $regions);
 	}
 	
-	// catch all method for any region name
+	/**
+	 * Catch all method for any region name.
+	 *
+	 * Shows page for a single region.
+	 *
+	 * @return string
+	 */
 	public function __call($method_name, $args)
 	{
 	    // remove 'action_' from the start
 	    $region_slug = substr($method_name, 7);
 	    $region = Region::where('slug', '=', $region_slug)->take(1)->first();
-	    if (is_null($region))
-	    {
+	    if (is_null($region)) {
 	        $view = View::make('thing-not-found')
 	            ->with('name', $region_slug)
 	            ->with('thing', 'region')
@@ -24,7 +34,7 @@ class Regions_Controller extends Base_Controller {
 	    }
 	    
 	    Section::inject('title', $region->name);
-	    return View::make('regions.individual')->with('region', $region);
+	    return View::make('regions.single')->with('region', $region);
 	}
 
 }

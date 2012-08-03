@@ -1,7 +1,12 @@
 <?php
 class Students_Controller extends Intakes_Controller
 {
-    public function action_students_index($campus_slug, $intake_slug, $student_num)
+    /**
+     * Show a single student.
+     *
+     * @return string
+     */
+    public function action_students_single($campus_slug, $intake_slug, $student_num)
     {
         $campus = Campus::where('slug', '=', $campus_slug)->take(1)->first();
         if (is_null($campus)) {

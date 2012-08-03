@@ -26,7 +26,7 @@ class Intakes_Controller extends Campuses_Controller
                 ->with('name', $intake_slug)
                 ->with('thing', 'intake')
                 ->with('url', URL::to("campuses/{$campus_name}"));
-            return $view;
+            return Response::make($view, 404, array());
         }
     
         Section::inject('title', $intake->name);

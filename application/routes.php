@@ -1,4 +1,5 @@
 <?php
+Route::get('campuses/(:any)/(:any)/(:num)', 'students@students_index');
 
 Route::get('campuses/(:any)/(:any)', 'intakes@route');
 

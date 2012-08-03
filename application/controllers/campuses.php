@@ -24,7 +24,7 @@ class Campuses_Controller extends Base_Controller
 	    }
 	}
 	
-	protected function show_404($slug)
+	protected function show_campus_404($slug)
 	{
 	    $view = View::make('thing-not-found')
 	        ->with('thing', 'campus')

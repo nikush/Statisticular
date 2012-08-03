@@ -8,6 +8,6 @@ class Intake extends Eloquent
 
     public function students()
     {
-        return $this->has_many_and_belongs_to('Student', 'intake_has_student', 'intake_fk', 'student_fk')->get();
+        return $this->has_many_and_belongs_to('Student', 'intake_has_student', 'intake_fk', 'student_fk');
     }
 }

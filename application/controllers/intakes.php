@@ -9,7 +9,7 @@ class Intakes_Controller extends Campuses_Controller
         
         if (is_null($campus))  {
             // campus not found
-            return parent::show_404($campus_slug);
+            return $this->show_campus_404($campus_slug);
         }
         
         // show specific intake
@@ -22,17 +22,25 @@ class Intakes_Controller extends Campuses_Controller
         
         if (is_null($intake)) {
             $campus_name = Str::lower($campus->name);
-            $view = View::make('thing-not-found')
-                ->with('name', $intake_slug)
-                ->with('thing', 'intake')
-                ->with('url', URL::to("campuses/{$campus_name}"));
-            return Response::make($view, 404, array());
+            return $this->show_intake_404($intake_slug, $campus_name);
         }
+        
+        $students = $intake->students()->get();
     
         Section::inject('title', $intake->name);
         return View::make('intakes.individual')
             ->with('intake', $intake->name)
-            ->with('campus', $campus);
+            ->with('campus', $campus)
+            ->with('students', $students);
+    }
+    
+    protected function show_intake_404($intake_slug, $campus_name)
+    {
+        $view = View::make('thing-not-found')
+                ->with('name', $intake_slug)
+                ->with('thing', 'intake')
+                ->with('url', URL::to("campuses/{$campus_name}"));
+            return Response::make($view, 404, array());
     }
 
 }

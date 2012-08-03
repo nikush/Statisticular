@@ -19,6 +19,8 @@ class TestStatusCodes extends PHPUnit_Framework_TestCase
         $this->assertEquals(200, $this->response('regions@uk'), 'indiviudal region page not working');
         
         $this->assertEquals(200, $this->response('intakes@route', array('london', 'wd1111')), 'intake page not working');
+        
+        $this->assertEquals(200, $this->response('students@students_index', array('london', 'wd1111', 14270)), 'student page not working');
     }
     
     /**
@@ -33,6 +35,10 @@ class TestStatusCodes extends PHPUnit_Framework_TestCase
         $this->assertEquals(404, $this->response('regions@broke'), 'individual region page not working');
         $this->assertEquals(404, $this->response('intakes@route', array('london', 'broke')), 'intake page not working (/campuses/london/broke)');
         $this->assertEquals(404, $this->response('intakes@route', array('broke', 'broke')), 'intake page not working (/campuses/broke/broke)');
+        
+        $this->assertEquals(404, $this->response('students@students_index', array('london', 'wd1111', 0)), 'student page not working (/campuses/london/wd1111/14270)');
+        $this->assertEquals(404, $this->response('students@students_index', array('london', 'broke', 0)), 'student page not working (/campuses/london/broke/14270)');
+        $this->assertEquals(404, $this->response('students@students_index', array('broke', 'wd1111', 0)), 'student page not working (/campuses/broke/wd1111/14270)');
     }
     
     /**

@@ -38,7 +38,7 @@ class Student extends Eloquent
      */
     public function get_nationality()
     {
-        return DB::table('nationalities')->where('id', '=', $this->nationality_fk)->first(array('name'));
+        return DB::table('nationalities')->where('id', '=', $this->nationality_fk)->only('name');
     }
     
     /**

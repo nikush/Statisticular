@@ -58,6 +58,14 @@ class TestStatusCodes extends PHPUnit_Framework_TestCase
             ), 
             'assignment page not working (/campuses/london/wd1111/assignments/sdk)'
         );
+        $this->assertEquals(
+            200, 
+            $this->response(
+                'intakes@nationalities', 
+                array('london', 'wd1111')
+            ), 
+            'intake nationalities page not working (/campuses/london/wd1111/nationalities)'
+        );
     }
     
     /**

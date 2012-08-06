@@ -17,7 +17,7 @@
             <li class="active"><a href="{{URL::current()}}">Students</a></li>
             <li><a href="{{URL::current()}}/assignments">Assignments</a></li>
             <li class="divider"></li>
-            <li>Stats for this intake</li>
+            <li><a href="{{URL::current()}}/nationalities">Nationalities</a></li>
         </ul>
     </div>
     <div class="ten columns">

@@ -23,14 +23,14 @@ class Campuses_Controller extends Base_Controller
 	    $campus = Campus::where('slug', '=', $slug)->take(1)->first();
 	    if (is_null($campus)) {
 	        return $this->show_404($slug);
-	    } else {
-	        $intakes = $campus->intakes()->order_by('start_date', 'asc')->get();
-	        
-	        Section::inject('title', $campus->name);
-	        return View::make('campuses.single')
-	            ->with('campus_name', $campus->name)
-	            ->with('intakes', $intakes);
 	    }
+	    
+        $intakes = $campus->intakes()->order_by('start_date', 'asc')->get();
+        
+        Section::inject('title', $campus->name);
+        return View::make('campuses.single')
+            ->with('campus_name', $campus->name)
+            ->with('intakes', $intakes);
 	}
 
     /**

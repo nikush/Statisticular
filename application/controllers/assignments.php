@@ -8,16 +8,8 @@ class Assignments_Controller extends Intakes_Controller
      */
     public function action_assignments_index($campus_slug, $intake_slug)
     {
-        $campus = Campus::where('slug', '=', $campus_slug)->take(1)->first();
-        if (is_null($campus)) {
-            return $this->show_campus_404($campus_slug);
-        }
-        
-        $intake = $campus->intakes()->where('slug', '=', $intake_slug)->take(1)->first();
-        if (is_null($intake)) {
-            $campus_name = Str::lower($campus->name);
-            return $this->show_intake_404($intake_slug, $campus_name);
-        }
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+        if ($url_result !== true) return $url_result;
         
         $assignments = $intake->assignments()->get();
         
@@ -36,16 +28,8 @@ class Assignments_Controller extends Intakes_Controller
      */
     public function action_assignments_single($campus_slug, $intake_slug, $assignment_slug)
     {
-        $campus = Campus::where('slug', '=', $campus_slug)->take(1)->first();
-        if (is_null($campus)) {
-            return $this->show_campus_404($campus_slug);
-        }
-        
-        $intake = $campus->intakes()->where('slug', '=', $intake_slug)->take(1)->first();
-        if (is_null($intake)) {
-            $campus_name = Str::lower($campus->name);
-            return $this->show_intake_404($intake_slug, $campus_name);
-        }
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+        if ($url_result !== true) return $url_result;
         
         $assignment_code = Str::upper($assignment_slug);
         $assignment = $intake->assignments()->where('assignments.code', '=', $assignment_code)->take(1)->first();

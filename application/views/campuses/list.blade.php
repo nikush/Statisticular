@@ -5,9 +5,6 @@ Campuses
 @endsection
 
 @section('breadcrumbs')
-    @section('crumbs')
-    <li><a href="{{URL::to('/')}}">Home</a></li>
-    @endsection
     @include('partials.breadcrumbs')
 @endsection
 

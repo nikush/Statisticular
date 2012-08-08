@@ -16,6 +16,7 @@ class Intakes_Controller extends Campuses_Controller
         $students = $intake->students()->get();
     
         Section::inject('title', $intake->name);
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         return View::make('intakes.single')
             ->with('intake', $intake->name)
             ->with('campus', $campus)
@@ -33,6 +34,7 @@ class Intakes_Controller extends Campuses_Controller
         
         if ($url_result !== true) return $url_result;
         
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         return View::make('intakes.nationalities')
             ->with('campus', $campus)
             ->with('intake', $intake)

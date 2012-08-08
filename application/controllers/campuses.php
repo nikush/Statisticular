@@ -10,6 +10,7 @@ class Campuses_Controller extends Base_Controller
 	public function action_index()
 	{
 	    $campuses = Campus::order_by('name', 'asc')->get();
+	    Section::inject('crumbs', BreadCrumbs::campusList());
 		return View::make('campuses.list')->with('campuses', $campuses);
 	}
     
@@ -28,6 +29,7 @@ class Campuses_Controller extends Base_Controller
         $intakes = $campus->intakes()->order_by('start_date', 'asc')->get();
         
         Section::inject('title', $campus->name);
+        Section::inject('crumbs', BreadCrumbs::campusSingle());
         return View::make('campuses.single')
             ->with('campus_name', $campus->name)
             ->with('intakes', $intakes);

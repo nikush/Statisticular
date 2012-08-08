@@ -10,6 +10,7 @@ class Regions_Controller extends Base_Controller
 	public function action_index()
 	{
 	    $regions = Region::order_by('name', 'asc')->get();
+	    Section::inject('crumbs', BreadCrumbs::regionList());
 	    return View::make('regions.list')->with('regions', $regions);
 	}
 	
@@ -34,6 +35,7 @@ class Regions_Controller extends Base_Controller
 	    }
 	    
 	    Section::inject('title', $region->name);
+	    Section::inject('crumbs', BreadCrumbs::regionSingle());
 	    return View::make('regions.single')->with('region', $region);
 	}
 

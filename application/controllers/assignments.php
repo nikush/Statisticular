@@ -13,6 +13,7 @@ class Assignments_Controller extends Intakes_Controller
         
         $assignments = $intake->assignments()->get();
         
+	    Section::inject('crumbs', BreadCrumbs::assignmentList($campus));
         Section::inject('title', $intake->name.': Assignments');
         
         return View::make('assignments.list')
@@ -42,6 +43,7 @@ class Assignments_Controller extends Intakes_Controller
             return Response::make($view, 404, array());
         }
         
+        Section::inject('crumbs', BreadCrumbs::assignmentSingle($campus, $intake));
         return View::make('assignments.single')
             ->with('campus', $campus)
             ->with('intake', $intake)

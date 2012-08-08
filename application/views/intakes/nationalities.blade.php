@@ -5,11 +5,6 @@ Nationalities of {{$intake->name}}
 @endsection
 
 @section('breadcrumbs')
-    @section('crumbs')
-    <li><a href="{{URL::to('/')}}">Home</a></li>
-    <li><a href="{{URL::to('campuses')}}">Campuses</a></li>
-    <li><a href="{{URL::to('campuses/'.$campus->slug)}}">{{$campus->name}}</a></li>
-    @endsection
     @include('partials.breadcrumbs')
 @endsection
 

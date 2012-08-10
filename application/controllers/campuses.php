@@ -11,6 +11,7 @@ class Campuses_Controller extends Base_Controller
 	{
 	    $campuses = Campus::order_by('name', 'asc')->get();
 	    Section::inject('crumbs', BreadCrumbs::campusList());
+	    Section::inject('side-nav', Sidebar::getCampuses('Campuses'));
 		return View::make('campuses.list')->with('campuses', $campuses);
 	}
     
@@ -30,6 +31,7 @@ class Campuses_Controller extends Base_Controller
         
         Section::inject('title', $campus->name);
         Section::inject('crumbs', BreadCrumbs::campusSingle());
+        Section::inject('side-nav', Sidebar::getCampus($campus, 'Intakes'));
         return View::make('campuses.single')
             ->with('campus_name', $campus->name)
             ->with('intakes', $intakes);

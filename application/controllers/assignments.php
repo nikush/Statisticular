@@ -15,6 +15,7 @@ class Assignments_Controller extends Intakes_Controller
         
 	    Section::inject('crumbs', BreadCrumbs::assignmentList($campus));
         Section::inject('title', $intake->name.': Assignments');
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Assignments'));
         
         return View::make('assignments.list')
             ->with('campus', $campus)

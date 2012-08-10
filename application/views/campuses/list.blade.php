@@ -12,10 +12,7 @@ Campuses
 <h1>Campuses</h1>
 <div class="row">
     <div class="two columns">
-        <ul class="side-nav">
-            <li class="active"><a href="{{URL::to('campuses')}}">Campuses</a></li>
-            <li><a href="{{URL::to('regions')}}">Regions</a></li>
-        </ul>
+        @yield('side-nav')
     </div>
     <div class="ten columns">
         <h3>Select a campus</h3>

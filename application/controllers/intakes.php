@@ -17,6 +17,7 @@ class Intakes_Controller extends Campuses_Controller
     
         Section::inject('title', $intake->name);
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Students'));
         return View::make('intakes.single')
             ->with('intake', $intake->name)
             ->with('campus', $campus)
@@ -35,6 +36,7 @@ class Intakes_Controller extends Campuses_Controller
         if ($url_result !== true) return $url_result;
         
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Nationalities'));
         return View::make('intakes.nationalities')
             ->with('campus', $campus)
             ->with('intake', $intake)

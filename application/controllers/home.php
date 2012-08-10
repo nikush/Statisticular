@@ -32,6 +32,7 @@ class Home_Controller extends Base_Controller {
 
 	public function action_index()
 	{
+	    Section::inject('side-nav', Sidebar::getCampuses());
 		return View::make('home.index');
 	}
 

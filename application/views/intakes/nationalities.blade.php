@@ -11,12 +11,7 @@ Nationalities of {{$intake->name}}
 @section('content')
 <h1>Nationalites of {{$intake->name}}</h1><div class="row">
     <div class="two columns">
-        <ul class="side-nav">
-            <li><a href="{{dirname(URL::current())}}">Students</a></li>
-            <li><a href="{{dirname(URL::current())}}/assignments">Assignments</a></li>
-            <li class="divider"></li>
-            <li class="active"><a href="{{URL::current()}}">Nationalities</a></li>
-        </ul>
+        @yield('side-nav')
     </div>
     <div class="ten columns">
         <table>

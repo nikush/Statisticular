@@ -22,6 +22,7 @@ class Students_Controller extends Intakes_Controller
         
         Section::inject('title', $student->get_full_name());
         Section::inject('crumbs', BreadCrumbs::studentSingle($campus, $intake));
+        Section::inject('side-nav', Sidebar::getStudent($campus, $intake, $student));
         
         return View::make('students.single')
             ->with('campus', $campus)

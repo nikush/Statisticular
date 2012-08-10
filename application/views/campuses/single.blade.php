@@ -8,11 +8,7 @@
 <h1>{{$campus_name}}</h1>
 <div class="row">
     <div class="two columns">
-        <ul class="side-nav">
-            <li class="active"><a href="{{URL::current().'/intakes'}}">Intakes</a></li>
-            <li class="divider"></li>
-            <li>Stats for this campus</li>
-        </ul>
+        @yield('side-nav')
     </div>
     <div class="ten columns">
         <ul class="disc">

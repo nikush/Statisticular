@@ -11,6 +11,7 @@ class Regions_Controller extends Base_Controller
 	{
 	    $regions = Region::order_by('name', 'asc')->get();
 	    Section::inject('crumbs', BreadCrumbs::regionList());
+	    Section::inject('side-nav', Sidebar::getCampuses('Regions'));
 	    return View::make('regions.list')->with('regions', $regions);
 	}
 	

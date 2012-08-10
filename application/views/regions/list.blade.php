@@ -1,4 +1,4 @@
-@layout('template')
+@layout('side-nav-content')
 
 @section('title')
 Regions
@@ -8,18 +8,14 @@ Regions
     @include('partials.breadcrumbs')
 @endsection
 
-@section('content')
+@section('heading')
 <h1>Regions</h1>
-<div class="row">
-    <div class="two columns">
-        @yield('side-nav')
-    </div>
-    <div class="ten columns">
-        <ul class="disc">
-            @foreach($regions as $region)
-            <li><a href="{{URL::to('regions/'.$region->slug)}}">{{$region->name}}</a></li>
-            @endforeach
-        </ul>
-    </div>
-</div>
+@endsection
+
+@section('main')
+<ul class="disc">
+    @foreach($regions as $region)
+    <li><a href="{{URL::to('regions/'.$region->slug)}}">{{$region->name}}</a></li>
+    @endforeach
+</ul>
 @endsection

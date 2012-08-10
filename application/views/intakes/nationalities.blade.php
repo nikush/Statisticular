@@ -1,4 +1,4 @@
-@layout('template')
+@layout('side-nav-content')
 
 @section('title')
 Nationalities of {{$intake->name}}
@@ -8,25 +8,21 @@ Nationalities of {{$intake->name}}
     @include('partials.breadcrumbs')
 @endsection
 
-@section('content')
-<h1>Nationalites of {{$intake->name}}</h1><div class="row">
-    <div class="two columns">
-        @yield('side-nav')
-    </div>
-    <div class="ten columns">
-        <table>
-            <tr>
-                <th>Nationality</th>
-                <th>Students</th>
-            </tr>
-            @foreach($nationalities as $nationality)
-            <tr>
-                <td>{{$nationality->nationality_name}}</td>
-                <td>{{$nationality->students}}</td>
-            </tr>
-            @endforeach
-        </table>
-    </div>
-</div>
+@section('heading')
+<h1>Nationalites of {{$intake->name}}</h1>
+@endsection
 
+@section('main')
+<table>
+    <tr>
+        <th>Nationality</th>
+        <th>Students</th>
+    </tr>
+    @foreach($nationalities as $nationality)
+    <tr>
+        <td>{{$nationality->nationality_name}}</td>
+        <td>{{$nationality->students}}</td>
+    </tr>
+    @endforeach
+</table>
 @endsection

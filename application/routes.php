@@ -4,6 +4,7 @@ Route::get('campuses/(:any)/(:any)/assignments/(:any)', 'assignments@assignments
 Route::get('campuses/(:any)/(:any)/assignments', 'assignments@assignments_index');
 
 Route::get('campuses/(:any)/(:any)/nationalities', 'intakes@nationalities');
+Route::get('campuses/(:any)/(:any)/ages', 'intakes@ages');
 
 Route::get('campuses/(:any)/(:any)/(:num)', 'students@students_single');
 

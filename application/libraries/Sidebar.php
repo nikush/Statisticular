@@ -25,11 +25,11 @@ class Sidebar
                 $active_str = '';
             }
         }
-        
+
         $str .= '</ul>';
         return $str;
     }
-    
+
     public static function getCampuses($active = '')
     {
         $nav = array(
@@ -38,7 +38,7 @@ class Sidebar
 	    );
 	    return static::get($nav, $active);
     }
-    
+
     public static function getCampus($campus, $active = '')
     {
         $intakes_path = 'campuses/'.$campus->slug;
@@ -49,22 +49,24 @@ class Sidebar
         );
         return static::get($nav, $active);
     }
-    
+
     public static function getIntake($campus, $intake, $active = '')
     {
         $intake_path = 'campuses/'.$campus->slug.'/'.$intake->slug;
         $assignments_path = $intake_path.'/assignments';
         $nationalities_path = $intake_path.'/nationalities';
-        
+        $ages_path = $intake_path.'/ages';
+
         $nav = array(
             'Students' => $intake_path,
             'Assignments' => $assignments_path,
             '-',
-            'Nationalities' => $nationalities_path
+            'Ages' => $ages_path,
+            'Nationalities' => $nationalities_path,
         );
         return static::get($nav, $active);
     }
-    
+
     public static function getStudent($campus, $intake, $student, $active = '')
     {
         $nav = array(

@@ -10,11 +10,11 @@ class Intakes_Controller extends Campuses_Controller
     public function action_intakes_single($campus_slug, $intake_slug)
     {
         $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
-        
+
         if ($url_result !== true) return $url_result;
-        
+
         $students = $intake->students()->get();
-    
+
         Section::inject('title', $intake->name);
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Students'));
@@ -23,7 +23,7 @@ class Intakes_Controller extends Campuses_Controller
             ->with('campus', $campus)
             ->with('students', $students);
     }
-    
+
     /**
      * Show the nationality statistics of an intake.
      *
@@ -32,9 +32,9 @@ class Intakes_Controller extends Campuses_Controller
     public function action_nationalities($campus_slug, $intake_slug)
     {
         $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
-        
+
         if ($url_result !== true) return $url_result;
-        
+
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Nationalities'));
         return View::make('intakes.nationalities')
@@ -42,12 +42,31 @@ class Intakes_Controller extends Campuses_Controller
             ->with('intake', $intake)
             ->with('nationalities', $this->get_nationalities($intake->id));
     }
-    
+
+    /**
+     * Show the age statistics of an intake.
+     *
+     * @return  string
+     */
+    public function action_ages($campus_slug, $intake_slug)
+    {
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+
+        if ($url_result !== true) return $url_result;
+
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Ages'));
+        return View::make('intakes.ages')
+            ->with('campus', $campus)
+            ->with('intake', $intake)
+            ->with('ages', $this->get_ages($intake->id));
+    }
+
     /**
      * Check that parameters passed into url are valid entries in the database.
      *
-     * If they are valid, the corresponding models will be instanciated and 
-     * assigned to the $campus and $intake parameters, and the method will 
+     * If they are valid, the corresponding models will be instanciated and
+     * assigned to the $campus and $intake parameters, and the method will
      * true, else the error response object will be returned.
      *
      * @param   string  $campus_slug
@@ -59,23 +78,23 @@ class Intakes_Controller extends Campuses_Controller
     protected function validate_url($campus_slug, $intake_slug, &$campus, &$intake)
     {
         $campus = Campus::where('slug', '=', $campus_slug)->take(1)->first();
-        
+
         if (is_null($campus))  {
             // campus not found
             return $this->show_campus_404($campus_slug);
         }
-        
+
         // show specific intake
         $intake = $campus->intakes()->where('slug', '=', $intake_slug)->take(1)->first();
-        
+
         if (is_null($intake)) {
             $campus_name = Str::lower($campus->name);
             return $this->show_intake_404($intake_slug, $campus_name);
         }
-        
+
         return true;
     }
-    
+
     /**
      * Get the breakdown of student nationalities for the specified intake.
      *
@@ -93,7 +112,7 @@ class Intakes_Controller extends Campuses_Controller
         where intake_has_student.intake_fk = ?
         group by nationality_fk;
         */
-        
+
         return Student::join('intake_has_student', 'intake_has_student.student_fk', '=', 'students.id')
             ->join('nationalities', 'students.nationality_fk', '=', 'nationalities.id')
             ->where('intake_has_student.intake_fk', '=', $intake_id)
@@ -101,8 +120,28 @@ class Intakes_Controller extends Campuses_Controller
             ->get(array('nationalities.name as nationality_name', DB::raw('count(students.nationality_fk) as students')));
     }
 
-    
-    
+    /**
+     * Get breakdown of ages for the specified intake.
+     *
+     * @return  array
+     */
+    public function get_ages($intake_id)
+    {
+        $data = DB::query('SELECT
+            SUM(IF(age < 21, 1, 0)) as "Under 21",
+            SUM(IF(age BETWEEN 21 and 24, 1, 0)) as "21 - 24",
+            SUM(IF(age BETWEEN 25 and 29, 1, 0)) as "25 - 29",
+            SUM(IF(age >= 30, 1, 0)) as "30 And Over"
+        FROM
+            (SELECT
+                TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age
+            FROM
+                students
+            inner join intake_has_student ON intake_has_student.student_fk = students.id
+                and intake_has_student.intake_fk = '.$intake_id.') as ages;');
+        return (array) $data[0];
+    }
+
     /**
      * Show the intake not found page with a 404 header.
      *

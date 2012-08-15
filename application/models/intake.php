@@ -72,4 +72,23 @@ class Intake extends Eloquent
             ->group_by('nationality_fk')
             ->get(array('nationalities.name as nationality_name', DB::raw('count(students.nationality_fk) as students')));
     }
+
+    /**
+     * Get the gender breakdown for this intake.
+     *
+     * @return array
+     */
+    public function get_genders()
+    {
+        $data = DB::query('select 
+                sum(if(gender = 1, 1, 0)) as `males`,
+                sum(if(gender = 0, 1, 0)) as `females`
+            from
+                students
+                        inner join
+                intake_has_student ON intake_has_student.student_fk = students.id
+            where
+                intake_has_student.intake_fk = '.$this->id);
+        return $data[0];
+    }
 }

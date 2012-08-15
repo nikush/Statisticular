@@ -55,6 +55,7 @@ class Sidebar
         $intake_path = 'campuses/'.$campus->slug.'/'.$intake->slug;
         $assignments_path = $intake_path.'/assignments';
         $nationalities_path = $intake_path.'/nationalities';
+        $genders_path = $intake_path.'/genders';
         $ages_path = $intake_path.'/ages';
 
         $nav = array(
@@ -63,6 +64,7 @@ class Sidebar
             '-',
             'Ages' => $ages_path,
             'Nationalities' => $nationalities_path,
+            'Genders' => $genders_path,
         );
         return static::get($nav, $active);
     }

@@ -63,6 +63,25 @@ class Intakes_Controller extends Campuses_Controller
     }
 
     /**
+     * Show the gender statistics of an intake.
+     *
+     * @return string
+     */
+    public function action_genders($campus_slug, $intake_slug)
+    {
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+
+        if ($url_result !== true) return $url_result;
+
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Genders'));
+        return View::make('intakes.genders')
+            ->with('campus', $campus)
+            ->with('intake', $intake)
+            ->with('genders', $intake->get_genders());
+    }
+
+    /**
      * Check that parameters passed into url are valid entries in the database.
      *
      * If they are valid, the corresponding models will be instanciated and

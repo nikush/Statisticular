@@ -1,6 +1,13 @@
 <?php
 class TestStatistics extends PHPUnit_Framework_TestCase
 {
+    private $intake;
+
+    public function setUp()
+    {
+        $this->intake = Intake::find(1);    // wd1111
+    }
+
     /**
      * Test that intake nationality statistics return expected figures.
      *
@@ -8,8 +15,7 @@ class TestStatistics extends PHPUnit_Framework_TestCase
      */
     public function testIntakeNationalityStats()
     {
-        $intake = Intake::find(1);  // wd1111
-        $data = $intake->get_nationalities();
+        $data = $this->intake->get_nationalities();
 
         /* $data is an array of Student model objects.
         Rather than going throught the hassel of creating student mock objects,
@@ -44,8 +50,7 @@ class TestStatistics extends PHPUnit_Framework_TestCase
      */
     public function testIntakeAgeStats()
     {
-        $intake = Intake::find(1);  // wd1111
-        $actual = $intake->get_ages();
+        $actual = $this->intake->get_ages();
 
         $expected = array(
             'under 21' => 2,
@@ -53,6 +58,17 @@ class TestStatistics extends PHPUnit_Framework_TestCase
             '25 - 29' => 2,
             '30 and over' => 2
         );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIntakeGenderStats()
+    {
+        $actual = $this->intake->get_genders();
+
+        $expected = new stdClass;
+        $expected->males = 7;
+        $expected->females = 1;
 
         $this->assertEquals($expected, $actual);
     }

@@ -8,17 +8,21 @@ class TestStatistics extends PHPUnit_Framework_TestCase
      */
     public function testIntakeNationalityStats()
     {
-        $controller = new Intakes_Controller();
-        $data = $controller->get_nationalities(1); // wd1111
+        $intake = Intake::find(1);  // wd1111
+        $data = $intake->get_nationalities();
 
-        $stats = array();
+        /* $data is an array of Student model objects.
+        Rather than going throught the hassel of creating student mock objects,
+        we just extract the data we're interested in and make sure it matches.
+        */
+        $actual = array();
         foreach($data as $nationality)
         {
             $record = new stdClass;
             $record->nationality_name = $nationality->nationality_name;
             $record->students = $nationality->students;
 
-            $stats[]= $record;
+            $actual[]= $record;
         }
 
         $uk = (object) array('nationality_name' => 'UK', 'students' => 5);
@@ -30,7 +34,7 @@ class TestStatistics extends PHPUnit_Framework_TestCase
             $int
         );
 
-        $this->assertEquals($expected, $stats);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -40,8 +44,8 @@ class TestStatistics extends PHPUnit_Framework_TestCase
      */
     public function testIntakeAgeStats()
     {
-        $controller = new Intakes_Controller();
-        $actual = $controller->get_ages(1);   // wd1111
+        $intake = Intake::find(1);  // wd1111
+        $actual = $intake->get_ages();
 
         $expected = array(
             'under 21' => 2,

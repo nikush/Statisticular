@@ -25,25 +25,6 @@ class Intakes_Controller extends Campuses_Controller
     }
 
     /**
-     * Show the nationality statistics of an intake.
-     *
-     * @return string
-     */
-    public function action_nationalities($campus_slug, $intake_slug)
-    {
-        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
-
-        if ($url_result !== true) return $url_result;
-
-        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
-        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Nationalities'));
-        return View::make('intakes.nationalities')
-            ->with('campus', $campus)
-            ->with('intake', $intake)
-            ->with('nationalities', $this->get_nationalities($intake->id));
-    }
-
-    /**
      * Show the age statistics of an intake.
      *
      * @return  string
@@ -59,7 +40,26 @@ class Intakes_Controller extends Campuses_Controller
         return View::make('intakes.ages')
             ->with('campus', $campus)
             ->with('intake', $intake)
-            ->with('ages', $this->get_ages($intake->id));
+            ->with('ages', $intake->get_ages());
+    }
+
+    /**
+     * Show the nationality statistics of an intake.
+     *
+     * @return string
+     */
+    public function action_nationalities($campus_slug, $intake_slug)
+    {
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+
+        if ($url_result !== true) return $url_result;
+
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Nationalities'));
+        return View::make('intakes.nationalities')
+            ->with('campus', $campus)
+            ->with('intake', $intake)
+            ->with('nationalities', $intake->get_nationalities());
     }
 
     /**
@@ -67,7 +67,7 @@ class Intakes_Controller extends Campuses_Controller
      *
      * If they are valid, the corresponding models will be instanciated and
      * assigned to the $campus and $intake parameters, and the method will
-     * true, else the error response object will be returned.
+     * return true, else the error response object will be returned.
      *
      * @param   string  $campus_slug
      * @param   string  $intake_slug
@@ -93,53 +93,6 @@ class Intakes_Controller extends Campuses_Controller
         }
 
         return true;
-    }
-
-    /**
-     * Get the breakdown of student nationalities for the specified intake.
-     *
-     * @return array
-     */
-    public function get_nationalities($intake_id)
-    {
-        /*
-        select nationalities.name as nationality, count(students.nationality_fk) as students
-        from students
-        inner join intake_has_student
-            on intake_has_student.student_fk = students.id
-        inner join nationalities
-            on students.nationality_fk = nationalities.id
-        where intake_has_student.intake_fk = ?
-        group by nationality_fk;
-        */
-
-        return Student::join('intake_has_student', 'intake_has_student.student_fk', '=', 'students.id')
-            ->join('nationalities', 'students.nationality_fk', '=', 'nationalities.id')
-            ->where('intake_has_student.intake_fk', '=', $intake_id)
-            ->group_by('nationality_fk')
-            ->get(array('nationalities.name as nationality_name', DB::raw('count(students.nationality_fk) as students')));
-    }
-
-    /**
-     * Get breakdown of ages for the specified intake.
-     *
-     * @return  array
-     */
-    public function get_ages($intake_id)
-    {
-        $data = DB::query('SELECT
-            SUM(IF(age < 21, 1, 0)) as "Under 21",
-            SUM(IF(age BETWEEN 21 and 24, 1, 0)) as "21 - 24",
-            SUM(IF(age BETWEEN 25 and 29, 1, 0)) as "25 - 29",
-            SUM(IF(age >= 30, 1, 0)) as "30 And Over"
-        FROM
-            (SELECT
-                TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age
-            FROM
-                students
-            inner join intake_has_student ON intake_has_student.student_fk = students.id
-                and intake_has_student.intake_fk = '.$intake_id.') as ages;');
-        return (array) $data[0];
     }
 
     /**

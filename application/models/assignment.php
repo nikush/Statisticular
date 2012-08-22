@@ -54,4 +54,22 @@ class Assignment extends Eloquent
         $this->name = $data->name;
         $this->code = $data->code;
     }
+
+    public function grades()
+    {
+        return DB::query(
+"select
+    students.id,
+    concat(students.first_name, ' ', students.last_name) as name,
+    student_has_grade_for_assignment.grade
+from
+    students
+        inner join
+    intake_has_student ON intake_has_student.student_fk = students.id
+        and intake_has_student.intake_fk = $this->intake_fk
+        left join
+    intake_has_assignment on intake_has_assignment.assignment_fk = $this->assignment_fk
+        left join
+    student_has_grade_for_assignment ON student_has_grade_for_assignment.student_fk = students.id");
+    }
 }

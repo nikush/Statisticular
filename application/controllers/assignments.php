@@ -49,6 +49,7 @@ class Assignments_Controller extends Intakes_Controller
         }
 
         Section::inject('crumbs', BreadCrumbs::assignmentSingle($campus, $intake));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake));
         return View::make('assignments.single')
             ->with('campus', $campus)
             ->with('intake', $intake)

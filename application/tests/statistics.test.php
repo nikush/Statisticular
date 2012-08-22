@@ -62,6 +62,11 @@ class TestStatistics extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * Test that intake gender statistics return expected figures.
+     *
+     * @return void
+     */
     public function testIntakeGenderStats()
     {
         $actual = $this->intake->get_genders();
@@ -69,6 +74,69 @@ class TestStatistics extends PHPUnit_Framework_TestCase
         $expected = new stdClass;
         $expected->males = 7;
         $expected->females = 1;
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Test that intake grade statistics return expected figures.
+     *
+     * @return void
+     */
+    public function testIntakeGradeStats()
+    {
+        $assignment = $this->intake->assignments()
+            ->where('assignment_fk', '=', 1)->take(1)->first();    // sdk
+
+        $actual = $assignment->grades();
+
+        $data = array(
+            array(
+                'id' => 14270,
+                'name' => 'Bender Rodriguez',
+                'grade' => 3,
+            ),
+            array(
+                'id' => 14271,
+                'name' => 'Philip Fry',
+                'grade' => 5,
+            ),
+            array(
+                'id' => 14272,
+                'name' => 'Walter White',
+                'grade' => null,
+            ),
+            array(
+                'id' => 14273,
+                'name' => 'Harvey Spectar',
+                'grade' => null,
+            ),
+            array(
+                'id' => 14274,
+                'name' => 'Eric Cartman',
+                'grade' => null,
+            ),
+            array(
+                'id' => 14275,
+                'name' => 'Eddard Stark',
+                'grade' => null,
+            ),
+            array(
+                'id' => 14276,
+                'name' => 'Tarunga Lila',
+                'grade' => null,
+            ),
+            array(
+                'id' => 14277,
+                'name' => 'Jesse Pinkman',
+                'grade' => null,
+            ),
+        );
+
+        $expected = array();
+        foreach($data as $student) {
+            $expected[] = (object) $student;
+        }
 
         $this->assertEquals($expected, $actual);
     }

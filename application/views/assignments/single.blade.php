@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-<h1>{{$assignment->name}} ({{$assignment->code}})</h1>
+<h1>{{$assignment->name()}} ({{$assignment->code()}})</h1>
 @endsection

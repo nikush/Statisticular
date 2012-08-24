@@ -11,7 +11,7 @@
 @section('main')
 <ul class="disc">
     @foreach($assignments as $assignment)
-    <li><a href="{{URL::current()}}/{{Str::lower($assignment->code)}}">{{$assignment->name}}</a></li>
+    <li><a href="{{URL::current()}}/{{Str::lower($assignment->code())}}">{{$assignment->name()}}</a></li>
     @endforeach
 </ul>
 @endsection

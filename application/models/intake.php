@@ -15,7 +15,7 @@ class Intake extends Eloquent
     {
         return $this->has_many_and_belongs_to('Student', 'intake_has_student', 'intake_fk', 'student_fk');
     }
-    
+
     /**
      * Get all allingments set for this intake.
      *
@@ -23,7 +23,7 @@ class Intake extends Eloquent
      */
     public function assignments()
     {
-        return $this->has_many_and_belongs_to('Assignment', 'intake_has_assignment', 'intake_fk', 'assignment_fk');
+        return $this->has_many('Assignment', 'assignment_fk');
     }
 
     /**
@@ -80,7 +80,7 @@ class Intake extends Eloquent
      */
     public function get_genders()
     {
-        $data = DB::query('select 
+        $data = DB::query('select
                 sum(if(gender = 1, 1, 0)) as `males`,
                 sum(if(gender = 0, 1, 0)) as `females`
             from

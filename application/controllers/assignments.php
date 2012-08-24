@@ -10,19 +10,19 @@ class Assignments_Controller extends Intakes_Controller
     {
         $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
         if ($url_result !== true) return $url_result;
-        
+
         $assignments = $intake->assignments()->get();
-        
+
 	    Section::inject('crumbs', BreadCrumbs::assignmentList($campus));
         Section::inject('title', $intake->name.': Assignments');
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Assignments'));
-        
+
         return View::make('assignments.list')
             ->with('campus', $campus)
             ->with('intake', $intake)
             ->with('assignments', $assignments);
     }
-    
+
     /**
      * Show a single assignment for a particular intake.
      *
@@ -32,10 +32,14 @@ class Assignments_Controller extends Intakes_Controller
     {
         $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
         if ($url_result !== true) return $url_result;
-        
+
         $assignment_code = Str::upper($assignment_slug);
-        $assignment = $intake->assignments()->where('assignments.code', '=', $assignment_code)->take(1)->first();
-        
+        $assignment_id = DB::table('assignments')
+            ->where('code', '=', $assignment_code)->take(1)->only('id');
+
+        $assignment = $intake->assignments()
+            ->where('assignment_fk', '=', $assignment_id)->take(1)->first();
+
         if (is_null($assignment)) {
             $view = View::make('thing-not-found')
                 ->with('name', $assignment_slug)
@@ -43,7 +47,7 @@ class Assignments_Controller extends Intakes_Controller
                 ->with('url', URL::to("campuses/{$campus->slug}/{$intake->slug}/assignments"));
             return Response::make($view, 404, array());
         }
-        
+
         Section::inject('crumbs', BreadCrumbs::assignmentSingle($campus, $intake));
         return View::make('assignments.single')
             ->with('campus', $campus)

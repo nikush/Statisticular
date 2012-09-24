@@ -140,4 +140,29 @@ class TestStatistics extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * Test that intake attendance statistics return expected figures.
+     *
+     * @return void
+     */
+    public function testIntakeAttendanceStats()
+    {
+        $actual = $this->intake->get_attendance();
+
+        $lesson1 = new stdclass;
+        $lesson1->id = '1';
+        $lesson1->name = 'Lecture 1';
+        $lesson1->timestamp = '2012-09-24 12:00:00';
+        $lesson1->attended = '2';
+        $lesson2 = new stdclass;
+        $lesson2->id = '2';
+        $lesson2->name = 'Lecture 2';
+        $lesson2->timestamp = '2012-09-24 13:00:00';
+        $lesson2->attended = '1';
+
+        $expected = array($lesson1, $lesson2);
+
+        $this->assertEquals($expected, $actual);
+    }
 }

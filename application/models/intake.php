@@ -91,4 +91,26 @@ class Intake extends Eloquent
                 intake_has_student.intake_fk = '.$this->id);
         return $data[0];
     }
+
+    /**
+     * Get the attendance breakdown for this intake.
+     *
+     * @return  array
+     */
+    public function get_attendance()
+    {
+        $data = DB::query('select
+                intake_has_lecture.id,
+                intake_has_lecture.name,
+                intake_has_lecture.timestamp,
+                sum(if(student_lecture_attendance.attendance_fk = 1,1,0)) as attended
+            from
+                student_lecture_attendance
+                inner join intake_has_lecture
+                    on student_lecture_attendance.lecture_fk = intake_has_lecture.id
+            where intake_has_lecture.intake_fk = '.$this->id.'
+            group by
+                student_lecture_attendance.lecture_fk');
+        return $data;
+    }
 }

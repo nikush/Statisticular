@@ -82,6 +82,27 @@ class Intakes_Controller extends Campuses_Controller
     }
 
     /**
+     * Show attendance statistics for an intake.
+     *
+     * @return  string
+     */
+    public function action_attendance($campus_slug, $intake_slug)
+    {
+        $url_result = $this->validate_url($campus_slug, $intake_slug, $campus, $intake);
+
+        if ($url_result !== true) return $url_result;
+
+        $attendance = $intake->get_attendance();
+
+        Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
+        Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Attendance'));
+        return View::make('intakes.attendance')
+            ->with('campus', $campus)
+            ->with('intake', $intake)
+            ->with('attendance', $attendance);
+    }
+
+    /**
      * Check that parameters passed into url are valid entries in the database.
      *
      * If they are valid, the corresponding models will be instanciated and

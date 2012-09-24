@@ -18,11 +18,11 @@ Ages of {{$intake->name}}
         <th>Age</th>
         <th>Students</th>
     </tr>
-    @foreach($ages as $group => $students) 
+    @foreach($ages as $group => $students)
     <tr>
         <td>{{ $group }}</td>
         <td>{{ $students }}</td>
     </tr>
-    @endforeach 
+    @endforeach
 </table>
 @endsection

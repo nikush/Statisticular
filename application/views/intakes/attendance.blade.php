@@ -13,5 +13,4 @@ Attendance of {{$intake->name}}
 @endsection
 
 @section('main')
-<?php print_r($attendance); ?>
 @endsection

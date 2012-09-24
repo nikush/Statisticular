@@ -92,14 +92,20 @@ class Intakes_Controller extends Campuses_Controller
 
         if ($url_result !== true) return $url_result;
 
-        $attendance = $intake->get_attendance();
+        $tmp = $intake->get_attendance();
+        $attendance = array();
+        foreach ($tmp as $lecture) {
+            $attendance[$lecture->name] = $lecture->attended;
+        }
+
+        $graph = new LineGraph(800, 400, $attendance);
 
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Attendance'));
+        Section::inject('main', $graph->render());
         return View::make('intakes.attendance')
             ->with('campus', $campus)
-            ->with('intake', $intake)
-            ->with('attendance', $attendance);
+            ->with('intake', $intake);
     }
 
     /**

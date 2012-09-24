@@ -13,7 +13,7 @@ class Assignments_Controller extends Intakes_Controller
 
         $assignments = $intake->assignments()->get();
 
-	    Section::inject('crumbs', BreadCrumbs::assignmentList($campus));
+        Section::inject('crumbs', BreadCrumbs::assignmentList($campus));
         Section::inject('title', $intake->name.': Assignments');
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Assignments'));
 
@@ -48,6 +48,14 @@ class Assignments_Controller extends Intakes_Controller
             return Response::make($view, 404, array());
         }
 
+        $assignment_tmp = array();
+        foreach ($assignment->grades() as $student) {
+            $assignment_tmp[$student->name] = $student->grade;
+        }
+
+        $graph = new LineGraph(800, 400, $assignment_tmp);
+
+        Section::inject('main', $graph->render());
         Section::inject('crumbs', BreadCrumbs::assignmentSingle($campus, $intake));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake));
         return View::make('assignments.single')

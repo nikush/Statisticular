@@ -42,3 +42,4 @@ bundles
 storage
 application/config
 artisan
+application/libraries/charts    # don't track charts in this project

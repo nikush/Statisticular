@@ -13,16 +13,3 @@ Nationalities of {{$intake->name}}
 @endsection
 
 @section('main')
-<table>
-    <tr>
-        <th>Nationality</th>
-        <th>Students</th>
-    </tr>
-    @foreach($nationalities as $nationality)
-    <tr>
-        <td>{{$nationality->nationality_name}}</td>
-        <td>{{$nationality->students}}</td>
-    </tr>
-    @endforeach
-</table>
-@endsection

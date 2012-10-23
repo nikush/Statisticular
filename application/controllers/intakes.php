@@ -35,12 +35,14 @@ class Intakes_Controller extends Campuses_Controller
 
         if ($url_result !== true) return $url_result;
 
+        $graph = new BarGraph(800, 400, $intake->get_ages());
+
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Ages'));
+        Section::inject('main', $graph->render());
         return View::make('intakes.ages')
             ->with('campus', $campus)
-            ->with('intake', $intake)
-            ->with('ages', $intake->get_ages());
+            ->with('intake', $intake);
     }
 
     /**
@@ -54,12 +56,20 @@ class Intakes_Controller extends Campuses_Controller
 
         if ($url_result !== true) return $url_result;
 
+        $nationalities = array();
+        $data = $intake->get_nationalities();
+        foreach($data as $obj) {
+            $nationalities[$obj->nationality_name] = $obj->students;
+        }
+
+        $graph = new BarGraph(800, 400, $nationalities);
+
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Nationalities'));
+        Section::inject('main', $graph->render());
         return View::make('intakes.nationalities')
             ->with('campus', $campus)
-            ->with('intake', $intake)
-            ->with('nationalities', $intake->get_nationalities());
+            ->with('intake', $intake);
     }
 
     /**
@@ -73,12 +83,15 @@ class Intakes_Controller extends Campuses_Controller
 
         if ($url_result !== true) return $url_result;
 
+        $genders = (array) $intake->get_genders();
+        $graph = new BarGraph(800, 400, $genders);
+
         Section::inject('crumbs', BreadCrumbs::intakeSingle($campus));
         Section::inject('side-nav', Sidebar::getIntake($campus, $intake, 'Genders'));
+        Section::inject('main', $graph->render());
         return View::make('intakes.genders')
             ->with('campus', $campus)
-            ->with('intake', $intake)
-            ->with('genders', $intake->get_genders());
+            ->with('intake', $intake);
     }
 
     /**

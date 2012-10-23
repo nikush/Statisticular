@@ -53,7 +53,7 @@ class Assignments_Controller extends Intakes_Controller
             $assignment_tmp[$student->name] = $student->grade;
         }
 
-        $graph = new LineGraph(800, 400, $assignment_tmp);
+        $graph = new BarGraph(800, 400, $assignment_tmp);
 
         Section::inject('main', $graph->render());
         Section::inject('crumbs', BreadCrumbs::assignmentSingle($campus, $intake));

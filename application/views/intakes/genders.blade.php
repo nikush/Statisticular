@@ -13,20 +13,3 @@ Genders of {{$intake->name}}
 @endsection
 
 @section('main')
-<table>
-    <thead>
-        <tr>
-            <th>Gender</th>
-            <th>Students</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($genders as $gender => $students)
-        <tr>
-            <td>{{ $gender }}</td>
-            <td>{{ $students }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-@endsection
